@@ -46,7 +46,6 @@ export default function Home() {
 
   const Card = ({ plant }) => {
     return (
-      // <TouchableOpacity activeOpacity={0.5} onPress={() => alert(plant.name)} >
       <View style={styles.card}>
         <View style={{ alignItems: "flex-end" }}>
           <TouchableOpacity
@@ -116,7 +115,6 @@ export default function Home() {
           </TouchableOpacity>
         </View>
       </View>
-      // </TouchableOpacity>
     );
   };
 
@@ -154,46 +152,53 @@ export default function Home() {
           />
         </View>
       </View>
-      <FlatList
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 20,
-          marginBottom: 20,
-        }}
-        numColumns={categories.length}
-        data={categories}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              key={item}
-              onPress={() => handleFilterDataByCategory(item)}
-            >
-              <Text
-                style={[
-                  styles.categoryText,
-                  categoryName === item && styles.categoryTextSelected,
-                ]}
+      <View>
+        <FlatList
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: 20,
+            marginBottom: 20,
+          }}
+          keyExtractor={(item) => `${item}`}
+          numColumns={categories.length}
+          data={categories}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity
+                key={item}
+                onPress={() => handleFilterDataByCategory(item)}
               >
-                {item}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
-      <FlatList
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          marginTop: 20,
-          marginBottom: 20,
-        }}
-        numColumns={2}
-        data={initialData}
-        renderItem={({ item }) => {
-          return <Card key={`${item.name}+${item.price}`} plant={item} />;
-        }}
-      />
+                <Text
+                  style={[
+                    styles.categoryText,
+                    categoryName === item && styles.categoryTextSelected,
+                  ]}
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            marginTop: 20,
+            marginBottom: 20,
+          }}
+          so
+          numColumns={2}
+          data={initialData}
+          keyExtractor={(item) => `${item.name}`}
+          renderItem={({ item }) => {
+            return <Card plant={item} />;
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 }
