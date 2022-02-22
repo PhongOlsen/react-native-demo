@@ -1,16 +1,25 @@
 import React, { useContext, useState } from "react";
-import { Text, View, StyleSheet, TextInput, Pressable } from "react-native";
+import { Text, View, TextInput, Pressable } from "react-native";
 import COLORS from "../../consts/color";
 import { AuthContext } from "../../contexts/AuthenContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
   const { setIsLogined } = useContext(AuthContext);
   const [user, setUser] = useState();
-  const hanldLogin = () => {
-    if (user.useName === "La Thanh Phong" && user.password === "28051999") {
-      setIsLogined(true);
-    } else {
-      alert("wrong account information !!!")
+  const hanldLogin = async () => {
+    try {
+      if (user.useName === "La Thanh Phong" && user.password === "28051999") {
+        setIsLogined(true);
+        await AsyncStorage.setItem(
+          "token",
+          "Bearer IiXkpLju15Sx12iuO7K3zvHdEQpWX2-PJ9PQK69FEjwzchUqsHgtmAlmSgOE-Sg5yC_237vmtwlvUHER8-fwlvcJ60JUjxxA5qnohUNZKoxA6xaee3WHXkRnm7gNYnYx"
+        );
+      } else {
+        alert("wrong account information !!!");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
   return (

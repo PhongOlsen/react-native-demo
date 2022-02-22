@@ -10,6 +10,11 @@ import COLORS from "../consts/color";
 import Splash from "../screens/splash-screen/Splash";
 import Login from "../screens/authentication/Login";
 import { AuthContext } from "../contexts/AuthenContext";
+import ProductDetail from "../screens/home/ProductDetail";
+import Cart from "../screens/cart/Cart";
+import { HomeContext } from "../contexts/HomeContext";
+import ActivityIndicatorScreen from "../components/ActivityIndicator";
+import { Text } from "react-native";
 
 const HomeStack = createNativeStackNavigator();
 
@@ -21,6 +26,10 @@ export const HomeNavigator = () => {
       }}
     >
       <HomeStack.Screen name="Home Screen" component={Home} />
+      <HomeStack.Screen
+        name="Product Detail Screen"
+        component={ProductDetail}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -36,6 +45,20 @@ export const BusinessNavigator = () => {
     >
       <BusinessStack.Screen name="Business Screen" component={Business} />
     </BusinessStack.Navigator>
+  );
+};
+
+const CartStack = createNativeStackNavigator();
+
+export const CartNavigation = () => {
+  return (
+    <CartStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <CartStack.Screen name="Cart Screen" component={Cart} />
+    </CartStack.Navigator>
   );
 };
 
@@ -98,6 +121,7 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   const { isLogined } = useContext(AuthContext);
+  const { isLoading } = useContext(HomeContext);
   return (
     <>
       {isLogined ? (
@@ -116,6 +140,8 @@ const AppNavigator = () => {
                   : "chatbubble-ellipses-outline";
               } else if (route.name === "Account") {
                 iconName = focused ? "person" : "person-outline";
+              } else if (route.name === "Cart") {
+                iconName = focused ? "cart" : "cart-outline";
               }
 
               // You can return any component that you like here!
@@ -128,11 +154,13 @@ const AppNavigator = () => {
           <Tab.Screen name="Home" component={HomeNavigator} />
           <Tab.Screen name="Business" component={BusinessNavigator} />
           <Tab.Screen name="Message" component={MessNavigator} />
+          <Tab.Screen name="Cart" component={CartNavigation} />
           <Tab.Screen name="Account" component={AccountNavigator} />
         </Tab.Navigator>
       ) : (
         <AuthenNavigate />
       )}
+      <ActivityIndicatorScreen open={isLoading} />
     </>
   );
 };

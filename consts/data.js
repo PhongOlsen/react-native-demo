@@ -43,7 +43,7 @@ const plants = [
   },
   {
     id: 5,
-    name: "Ravenea Plant",
+    name: "Ravenea Plant 2",
     category: "ORGANIC",
     price: "50.99",
     like: true,
@@ -53,7 +53,7 @@ const plants = [
   },
   {
     id: 6,
-    name: "Dragon Plant",
+    name: "Dragon Plant 2",
     category: "INDOORS",
     price: "50.99",
     like: false,

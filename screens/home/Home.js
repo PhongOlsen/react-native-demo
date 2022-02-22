@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../consts/color";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -15,19 +15,19 @@ import {
 import data from "../../consts/data";
 const width = Dimensions.get("window").width / 2 - 30;
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [categoryName, setCategoryName] = useState("ALL");
   const categories = ["ALL", "ORGANIC", "INDOORS", "SYNTHETIC"];
-  const [valueFilter, setValueFilter] = useState();
   const [initialData, setInitialData] = useState();
+  const inputValue = useRef(null);
 
   useEffect(() => {
     setInitialData(data);
   }, []);
 
-  const handleFilterData = (value) => {
+  const handleFilterData = () => {
     setInitialData(
-      data.filter((x) => x.name.toLowerCase().includes(value.toLowerCase()))
+      data.filter((x) => x.name.toLowerCase().includes(inputValue.current.toLowerCase()))
     );
   };
 
@@ -71,7 +71,7 @@ export default function Home() {
         </View>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => alert(plant.name)}
+          onPress={() => navigation.navigate("Product Detail Screen", plant)}
           style={{ height: 100, alignItems: "center" }}
         >
           <Image
@@ -135,7 +135,6 @@ export default function Home() {
             Hanh Nguyen Shop
           </Text>
         </View>
-        <Ionicons name={"cart"} size={28} />
       </View>
       <View style={{ flexDirection: "row", marginTop: 20 }}>
         <View style={styles.searchContainer}>
@@ -147,8 +146,8 @@ export default function Home() {
           <TextInput
             placeholder="Search"
             style={styles.input}
-            onChangeText={(value) => setValueFilter(value)}
-            onSubmitEditing={() => handleFilterData(valueFilter)}
+            onChangeText={(value) => (inputValue.current = value)}
+            onSubmitEditing={handleFilterData}
           />
         </View>
       </View>
@@ -190,7 +189,6 @@ export default function Home() {
             marginTop: 20,
             marginBottom: 20,
           }}
-          so
           numColumns={2}
           data={initialData}
           keyExtractor={(item) => `${item.name}`}
