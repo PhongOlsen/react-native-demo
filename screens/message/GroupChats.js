@@ -42,20 +42,19 @@ export default function GroupChats({navigation}) {
                         <View key={index}>
                             <TouchableOpacity
                                 activeOpacity={0.5}
-                                onPress={() => navigation.navigate('Message Screen', {groupName: item})}>
+                                onPress={() => navigation.navigate('Message Screen', {groupName: item.groupName})}>
                                 <View style={{flexDirection: "row"}}>
                                     <View>
                                         <View style={{
                                             width: 70,
-                                            height: 70,
-                                            borderRadius: 200,
-                                            marginTop: 10
+                                            height: 80,
+                                            marginTop: 10,
                                         }}>
                                             <Image
                                                 source={{
-                                                    uri: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/272310841_1391781817908702_1611987567163328222_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=biiDNtFlQ6YAX8Kib3g&_nc_ht=scontent.fsgn2-5.fna&oh=00_AT9xeqZyeYoWTbLGLBO_E2P1BC3IZcseKO_vsZg0mhP-ZQ&oe=6228DF75',
+                                                    uri: item.avatar
                                                 }}
-                                                style={{resizeMode: "contain", flex: 1, borderRadius: 200}}
+                                                style={{width:"100%", flex:1, borderRadius:200}}
                                             />
                                         </View>
                                         <View>
@@ -70,7 +69,7 @@ export default function GroupChats({navigation}) {
                                             alignItems: "center"
                                         }}>
                                         <View style={{marginLeft: 10}}>
-                                            <Text style={{fontWeight: "bold", fontSize: 18}}>{item}</Text>
+                                            <Text style={{fontWeight: "bold", fontSize: 18}}>{item.userName}</Text>
                                             <Text style={{fontWeight: "bold", color: "gray"}}>I love you</Text>
                                         </View>
                                         <Text style={{fontWeight: "bold", color: "gray"}}>1 min ago</Text>
