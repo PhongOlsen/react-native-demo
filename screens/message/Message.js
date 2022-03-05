@@ -1,66 +1,83 @@
-import React, { memo, useCallback, useContext, useMemo, useState } from "react";
-import { Text, View, Button } from "react-native";
-import { DemoContext } from "../../contexts/DemoContext";
-import useSearchProduct from "../../hooks/useSearchProduct";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {Text, View, TouchableOpacity, TextInput, ScrollView} from "react-native";
+import COLORS from "../../consts/color";
+import {SafeAreaView} from "react-native-safe-area-context";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import {MessageContext} from "../../contexts/MessageContext";
+import {AuthContext} from "../../contexts/AuthenContext";
+import BottomChat from "./BottomChat";
 
-export function Demo({ handleDemo }) {
-  console.log("La Thanh Phong");
-  return (
-    <View>
-      <Button onPress={handleDemo} title="Hanh Nguyen" />
-    </View>
-  );
-}
-export const DemoMemo = memo(Demo);
+export default function Message({navigation}) {
+    const {
+        doGetAllMessage,
+        messages,
+        doPostMessage,
+        doGetOnSnapshotMess,
+        messBackup,
+        setMessages
+    } = useContext(MessageContext);
+    const {currentUser} = useContext(AuthContext);
 
-export function Demo2({ handleDemo }) {
-  console.log("Mai Linh");
-  return (
-    <View>
-      <Button onPress={handleDemo} title="Demo2" />
-    </View>
-  );
-}
+    useEffect(() => {
+        setMessages(messages.concat(messBackup));
+    }, [messBackup])
 
-// useMemo useCallBack luon luon duoc di theo vs react.memo
+    useEffect(() => {
+        doGetAllMessage();
+    }, []);
 
-export default function Message() {
-  const { demo } = useContext(DemoContext);
-  const [term, setTerm] = useState("");
-  const [limit, setLimit] = useState(20);
+    useEffect(() => {
+        doGetOnSnapshotMess();
+    }, []);
 
-  const dataList = useSearchProduct(term, limit);
-
-  const handleClick = useCallback(() => {
-    // setLimit(limit + 1);
-    alert(1);
-  }, []);
-
-  const handleDemo = () => {
-    alert(1);
-  };
-
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Custom Hook={dataList.length}</Text>
-      <Text>Context={demo.length}</Text>
-      <Button
-        onPress={() => setLimit(limit + 1)}
-        title="Increase Limit"
-        color="#841584"
-      />
-      <View>
-        <Button
-          onPress={() => setLimit(limit - 1)}
-          title="Decrease Limit"
-          color="#841584"
-        />
-      </View>
-      <View>
-        <Button onPress={handleClick} title="DemoTest" color="#841584" />
-      </View>
-      {/* <DemoMemo handleDemo={handleClick} /> */}
-      {/* <Demo2 handleDemo={handleClick} /> */}
-    </View>
-  );
+    return (
+        <SafeAreaView
+            style={{
+                flex: 1,
+                paddingHorizontal: 20,
+                backgroundColor: COLORS.white,
+            }}
+        >
+            <View style={{
+                marginTop: 30,
+                flexDirection: "row",
+                justifyContent: "space-between"
+            }}>
+                <TouchableOpacity
+                    activeOpacity={0.5}
+                    onPress={() => navigation.goBack()}
+                >
+                    <Ionicons name={"arrow-back"} size={28}/>
+                </TouchableOpacity>
+                <Text style={{fontSize: 20, fontWeight: "bold"}}>Chats</Text>
+                <Text/>
+            </View>
+            <View style={{
+                height: 1,
+                backgroundColor: COLORS.light,
+                marginTop: 10,
+            }}/>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View>
+                    <View>
+                        {messages.length > 0 ? messages.map((item) => {
+                            return (
+                                <View key={item.id} style={{
+                                    height: 30,
+                                    alignSelf: currentUser.userName === item.userName ? 'flex-end' : 'flex-start',
+                                    backgroundColor: currentUser.userName === item.userName ? COLORS.green : 'gray',
+                                    borderRadius: 50,
+                                    justifyContent: 'center',
+                                    marginTop: 10
+                                }}>
+                                    <Text style={{marginHorizontal: 15, fontWeight: "bold"}}>{item.message}</Text>
+                                </View>
+                            )
+                        }) : (<Text/>)}
+                    </View>
+                </View>
+            </ScrollView>
+            <BottomChat currentUser={currentUser} doPostMessage={doPostMessage}/>
+        </SafeAreaView>
+    );
 }

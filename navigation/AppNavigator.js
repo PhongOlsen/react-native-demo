@@ -14,7 +14,6 @@ import ProductDetail from "../screens/home/ProductDetail";
 import Cart from "../screens/cart/Cart";
 import { HomeContext } from "../contexts/HomeContext";
 import ActivityIndicatorScreen from "../components/ActivityIndicator";
-import { Text } from "react-native";
 
 const HomeStack = createNativeStackNavigator();
 

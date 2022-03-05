@@ -18,8 +18,8 @@ export const DemoProvider = ({ children }) => {
       if (status === 200) {
         if (callback) callback(data);
         setDemo(data.businesses);
-        setIsLoading(false);
-      }
+      };
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       setIsLoading(false);

@@ -191,7 +191,7 @@ export default function Home({ navigation }) {
           }}
           numColumns={2}
           data={initialData}
-          keyExtractor={(item) => `${item.name}`}
+              keyExtractor={(item) => `${item.name}`}
           renderItem={({ item }) => {
             return <Card plant={item} />;
           }}
