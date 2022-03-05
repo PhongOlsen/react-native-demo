@@ -3,7 +3,7 @@ import COLORS from "../../consts/color";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {useState} from "react";
 
-export default function BottomChat({currentUser, doPostMessage}) {
+export default function BottomChat({currentUser, doPostMessage, groupName}) {
     const [messValue, setMessValue] = useState('');
     return (
         <View style={{marginTop: "auto", marginBottom: 10, flexDirection: "row", alignItems: "center"}}>
@@ -29,7 +29,7 @@ export default function BottomChat({currentUser, doPostMessage}) {
                         }}/>
                 </View>
                 <TouchableOpacity onPress={() => {
-                    doPostMessage({userName: currentUser.userName, message: messValue});
+                    doPostMessage(groupName, {userName: currentUser.userName, message: messValue});
                     setMessValue('');
                 }}>
                     <Ionicons style={{marginLeft: 20, marginRight: 0}} name={"ios-send"} size={28}/>

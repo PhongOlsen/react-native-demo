@@ -8,10 +8,10 @@ export const MessageProvider = ({children}) => {
     const [messages, setMessages] = useState([]);
     const [messBackup, setMessBackup] = useState([]);
 
-    const doGetAllMessage = async () => {
+    const doGetAllMessage = async (groupName) => {
         setIsLoading(true);
         try {
-            const citiesRef = db.collection('message');
+            const citiesRef = db.collection(groupName);
             const snapshot = await citiesRef.get();
             const messagesRes = [];
             snapshot.forEach(doc => {
@@ -26,9 +26,9 @@ export const MessageProvider = ({children}) => {
         }
     }
 
-    const doGetOnSnapshotMess = async () => {
+    const doGetOnSnapshotMess = async (groupName) => {
         try {
-            const query = db.collection('message');
+            const query = db.collection(groupName);
             query.onSnapshot(querySnapshot => {
                 const newArray = [];
                 querySnapshot.docChanges().forEach(change => {
@@ -43,9 +43,9 @@ export const MessageProvider = ({children}) => {
         }
     }
 
-    const doPostMessage = (mess) => {
+    const doPostMessage = (groupName, mess) => {
         try {
-            db.collection('message').doc().set(mess);
+            db.collection(groupName).doc().set(mess);
         } catch (e) {
             console.log(e);
         }

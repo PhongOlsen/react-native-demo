@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {Text, View, TouchableOpacity, TextInput, ScrollView} from "react-native";
+import React, {useContext, useEffect} from "react";
+import {Text, View, TouchableOpacity, ScrollView} from "react-native";
 import COLORS from "../../consts/color";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -7,7 +7,8 @@ import {MessageContext} from "../../contexts/MessageContext";
 import {AuthContext} from "../../contexts/AuthenContext";
 import BottomChat from "./BottomChat";
 
-export default function Message({navigation}) {
+export default function Message({navigation, route}) {
+    const {groupName} = route.params;
     const {
         doGetAllMessage,
         messages,
@@ -23,11 +24,11 @@ export default function Message({navigation}) {
     }, [messBackup])
 
     useEffect(() => {
-        doGetAllMessage();
+        doGetAllMessage(groupName);
     }, []);
 
     useEffect(() => {
-        doGetOnSnapshotMess();
+        doGetOnSnapshotMess(groupName);
     }, []);
 
     return (
@@ -77,7 +78,7 @@ export default function Message({navigation}) {
                     </View>
                 </View>
             </ScrollView>
-            <BottomChat currentUser={currentUser} doPostMessage={doPostMessage}/>
+            <BottomChat groupName={groupName} currentUser={currentUser} doPostMessage={doPostMessage}/>
         </SafeAreaView>
     );
 }
