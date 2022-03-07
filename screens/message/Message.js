@@ -20,7 +20,7 @@ export default function Message({navigation, route}) {
     const {currentUser} = useContext(AuthContext);
 
     useEffect(() => {
-        setMessages(messages.concat(messBackup));
+        if (!messages.some(x => x.id === messBackup.id)) setMessages(messages.concat(messBackup));
     }, [messBackup])
 
     useEffect(() => {
