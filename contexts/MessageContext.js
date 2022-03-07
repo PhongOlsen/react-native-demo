@@ -19,7 +19,9 @@ export const MessageProvider = ({children}) => {
                 data.id = doc.id;
                 messagesRes.push(data);
             });
-            setMessages(messagesRes);
+            setMessages(messagesRes.sort(function (a, b) {
+                return a.createdAt - b.createdAt;
+            }));
             setIsLoading(false);
         } catch (e) {
             setIsLoading(false);

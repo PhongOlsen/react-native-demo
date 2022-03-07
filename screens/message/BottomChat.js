@@ -29,7 +29,8 @@ export default function BottomChat({currentUser, doPostMessage, groupName}) {
                         }}/>
                 </View>
                 <TouchableOpacity onPress={() => {
-                    doPostMessage(groupName, {userName: currentUser.userName, message: messValue});
+                    const currentDate = new Date();
+                    doPostMessage(groupName, {userName: currentUser.userName, message: messValue, createdAt: currentDate});
                     setMessValue('');
                 }}>
                     <Ionicons style={{marginLeft: 20, marginRight: 0}} name={"ios-send"} size={28}/>

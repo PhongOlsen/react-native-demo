@@ -20,7 +20,9 @@ export default function Message({navigation, route}) {
     const {currentUser} = useContext(AuthContext);
 
     useEffect(() => {
-        if (!messages.some(x => x.id === messBackup.id)) setMessages(messages.concat(messBackup));
+        if (!messages.some(x => x.id === messBackup.id)) setMessages(messages.concat(messBackup).sort(function (a, b) {
+            return a.createdAt - b.createdAt;
+        }));
     }, [messBackup])
 
     useEffect(() => {
