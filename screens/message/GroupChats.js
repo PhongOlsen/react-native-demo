@@ -4,6 +4,7 @@ import COLORS from "../../consts/color";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {AuthContext} from "../../contexts/AuthenContext";
+import SearchGroupChat from "./SearchGroupChat";
 
 export default function GroupChats({navigation}) {
     const {currentUser} = useContext(AuthContext);
@@ -36,6 +37,7 @@ export default function GroupChats({navigation}) {
                     marginTop: 20,
                 }}
             />
+            <SearchGroupChat/>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {currentUser.groups.map((item, index) => {
                     return (

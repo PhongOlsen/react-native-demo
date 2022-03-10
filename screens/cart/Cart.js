@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     Image,
     Pressable,
-    FlatList,
     ScrollView
 } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -135,22 +134,13 @@ export default function Cart({navigation}) {
                     }}
                 />
                 <View>
-                    {cart.length > 0 ? (
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            contentContainerStyle={{
-                                marginTop: 10,
-                            }}
-                            numColumns={1}
-                            data={cart}
-                            keyExtractor={(item) => `${item.name}`}
-                            renderItem={({item}) => {
-                                return <ItemCart plant={item}/>;
-                            }}
-                        />
-                    ) : (
-                        <Text/>
-                    )}
+                    {cart.length > 0 ? cart.map((item, index) => {
+                        return (
+                            <View key={index}>
+                                <ItemCart plant={item}/>
+                            </View>
+                        )
+                    }) : ''}
                 </View>
             </ScrollView>
             <View style={{marginTop: "auto", marginBottom: 20}}>
