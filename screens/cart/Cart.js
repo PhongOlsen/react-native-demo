@@ -140,7 +140,7 @@ export default function Cart({navigation}) {
                                 <ItemCart plant={item}/>
                             </View>
                         )
-                    }) : ''}
+                    }) : <Text/>}
                 </View>
             </ScrollView>
             <View style={{marginTop: "auto", marginBottom: 20}}>

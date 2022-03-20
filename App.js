@@ -9,6 +9,8 @@ import {HomeProvider} from "./contexts/HomeContext";
 import {ProductProvider} from "./contexts/ProductContext";
 import AppNavigator from "./navigation/AppNavigator";
 import {MessageProvider} from "./contexts/MessageContext";
+import {Provider} from 'react-redux';
+import store from "./redux/store";
 
 export default function App() {
     const _setTimeout = global.setTimeout;
@@ -53,22 +55,24 @@ export default function App() {
         };
     }
     return (
-        <HomeProvider>
-            <AuthenProvider>
-                <ProductProvider>
-                    <CartProvider>
-                        <DemoProvider>
-                            <MessageProvider>
-                                <SafeAreaProvider fallback={<Text>Loading...</Text>}>
-                                    <NavigationContainer>
-                                        <AppNavigator/>
-                                    </NavigationContainer>
-                                </SafeAreaProvider>
-                            </MessageProvider>
-                        </DemoProvider>
-                    </CartProvider>
-                </ProductProvider>
-            </AuthenProvider>
-        </HomeProvider>
+        <Provider store={store}>
+            <HomeProvider>
+                <AuthenProvider>
+                    <ProductProvider>
+                        <CartProvider>
+                            <DemoProvider>
+                                <MessageProvider>
+                                    <SafeAreaProvider fallback={<Text>Loading...</Text>}>
+                                        <NavigationContainer>
+                                            <AppNavigator/>
+                                        </NavigationContainer>
+                                    </SafeAreaProvider>
+                                </MessageProvider>
+                            </DemoProvider>
+                        </CartProvider>
+                    </ProductProvider>
+                </AuthenProvider>
+            </HomeProvider>
+        </Provider>
     );
 }
